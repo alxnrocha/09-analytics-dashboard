@@ -1,4 +1,4 @@
-# Proyecto 09 - Analytics Dashboard 📊
+# Proyecto - Analytics Dashboard 📊
 
 Panel de análisis de ventas para un e-commerce ficticio.
 

@@ -1,4 +1,4 @@
-# Blueprint: Analytics Dashboard (Proyecto 09)
+# Blueprint: Analytics Dashboard (Proyecto)
 
 ## 📌 Resumen del Proyecto
 
