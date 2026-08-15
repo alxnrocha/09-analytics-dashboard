@@ -20,6 +20,9 @@ dist-ssr
 # Local session state (never commit)
 STATUS_PROGRESSO.md
 
+# Local design reference material (never commit)
+design/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
