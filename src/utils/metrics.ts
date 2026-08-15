@@ -28,6 +28,17 @@ export interface CategoryBreakdown {
   secondaryColor: string;
 }
 
+export interface TopProductItem {
+  id: string;
+  name: string;
+  category: string;
+  unitsSold: number;
+  revenue: number;
+  price: number;
+  isHot?: boolean;
+  imageUrl?: string;
+}
+
 export function computeKpiMetrics(data: DashboardData): KpiMetrics {
   const revenue = data.orders.reduce((sum, order) => {
     const orderSum = order.items.reduce(
@@ -109,11 +120,23 @@ export function computeRevenueTimeSeries(orders: Order[], daysCount = 30): Reven
 
 const CATEGORY_PALETTE: Record<string, { color: string; secondary: string; displayName?: string }> =
   {
-    'cat-electronica': { color: '#8b5cf6', secondary: '#c4b5fd', displayName: 'Electrónica' },
+    'cat-electronica': {
+      color: '#8b5cf6',
+      secondary: '#c4b5fd',
+      displayName: 'Electrónica',
+    },
     'cat-ropa': { color: '#3b82f6', secondary: '#93c5fd', displayName: 'Moda' },
     'cat-hogar': { color: '#10b981', secondary: '#6ee7b7', displayName: 'Hogar' },
-    'cat-deportes': { color: '#f59e0b', secondary: '#fde68a', displayName: 'Deportes' },
-    'cat-belleza': { color: '#06b6d4', secondary: '#a5f3fc', displayName: 'Belleza' },
+    'cat-deportes': {
+      color: '#f59e0b',
+      secondary: '#fde68a',
+      displayName: 'Deportes',
+    },
+    'cat-belleza': {
+      color: '#06b6d4',
+      secondary: '#a5f3fc',
+      displayName: 'Belleza',
+    },
     'cat-otros': { color: '#f97316', secondary: '#fed7aa', displayName: 'Otros' },
   };
 
@@ -159,4 +182,57 @@ export function computeCategoryBreakdown(data: DashboardData): CategoryBreakdown
   });
 
   return breakdown.sort((a, b) => b.revenue - a.revenue);
+}
+
+const PRODUCT_IMAGES: Record<string, string> = {
+  'prod-auriculares':
+    'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=100&q=80',
+  'prod-smartphone':
+    'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=100&q=80',
+  'prod-camiseta':
+    'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=100&q=80',
+  'prod-chaqueta':
+    'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=100&q=80',
+  'prod-lampara':
+    'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=100&q=80',
+  'prod-sabanas':
+    'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=100&q=80',
+  'prod-zapatillas':
+    'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=100&q=80',
+  'prod-botella':
+    'https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=100&q=80',
+};
+
+export function computeTopProducts(data: DashboardData): TopProductItem[] {
+  const categoryMap = new Map(data.categories.map((c) => [c.id, c.name]));
+  const statsMap: Record<string, { unitsSold: number; revenue: number }> = {};
+
+  for (const product of data.products) {
+    statsMap[product.id] = { unitsSold: 0, revenue: 0 };
+  }
+
+  for (const order of data.orders) {
+    for (const item of order.items) {
+      if (statsMap[item.productId]) {
+        statsMap[item.productId].unitsSold += item.quantity;
+        statsMap[item.productId].revenue += item.quantity * item.unitPrice;
+      }
+    }
+  }
+
+  const items: TopProductItem[] = data.products.map((p, index) => {
+    const stats = statsMap[p.id] || { unitsSold: 0, revenue: 0 };
+    return {
+      id: p.id,
+      name: p.name,
+      category: categoryMap.get(p.categoryId) || 'General',
+      unitsSold: stats.unitsSold,
+      revenue: Math.round(stats.revenue),
+      price: p.price,
+      isHot: index === 0,
+      imageUrl: PRODUCT_IMAGES[p.id] || '',
+    };
+  });
+
+  return items.sort((a, b) => b.revenue - a.revenue);
 }

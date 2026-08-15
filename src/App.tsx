@@ -6,8 +6,9 @@ import { KpiGrid } from './components/dashboard/KpiGrid';
 import { RevenueChart } from './components/dashboard/RevenueChart';
 import { SalesDistributionDonut } from './components/dashboard/SalesDistributionDonut';
 import { CategoryBarChart } from './components/dashboard/CategoryBarChart';
+import { TopProductsTable } from './components/dashboard/TopProductsTable';
 import { useDashboardData } from './hooks/useDashboardData';
-import { computeKpiMetrics, computeCategoryBreakdown } from './utils/metrics';
+import { computeKpiMetrics, computeCategoryBreakdown, computeTopProducts } from './utils/metrics';
 import { RefreshCw, AlertCircle } from 'lucide-react';
 
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
 
   const metrics = data ? computeKpiMetrics(data) : null;
   const categoriesBreakdown = data ? computeCategoryBreakdown(data) : [];
+  const topProducts = data ? computeTopProducts(data) : [];
 
   return (
     <DashboardLayout>
@@ -85,18 +87,14 @@ export default function App() {
           </div>
         </div>
 
-        {/* Charts Row 2: Category Breakdown Bar Chart + Table Placeholder */}
+        {/* Charts Row 2: Category Breakdown Bar Chart + Top Products Table */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <CategoryBarChart categories={categoriesBreakdown} isLoading={isLoading} />
           </div>
 
           <div className="lg:col-span-1">
-            <Card className="flex h-full min-h-[300px] items-center justify-center border-dashed border-slate-200 bg-white/50">
-              <span className="text-sm font-medium text-slate-400">
-                Productos destacados / Tabla (#9)
-              </span>
-            </Card>
+            <TopProductsTable products={topProducts} isLoading={isLoading} />
           </div>
         </div>
       </div>
