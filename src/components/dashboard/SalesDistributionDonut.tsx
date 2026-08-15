@@ -39,7 +39,7 @@ export const SalesDistributionDonut: FC<SalesDistributionDonutProps> = ({
 }) => {
   if (isLoading) {
     return (
-      <div className="flex h-full min-h-[320px] flex-col rounded-3xl border border-slate-100 bg-white p-6 shadow-xs">
+      <div className="flex h-full min-h-[300px] flex-col rounded-3xl border border-slate-100 bg-white p-4 sm:p-6 shadow-xs">
         <div className="h-6 w-40 animate-pulse rounded-lg bg-slate-100" />
         <div className="mt-6 flex-1 animate-pulse rounded-2xl bg-slate-50" />
       </div>
@@ -47,19 +47,19 @@ export const SalesDistributionDonut: FC<SalesDistributionDonutProps> = ({
   }
 
   return (
-    <div className="flex h-full flex-col justify-between rounded-3xl border border-slate-100 bg-white p-6 shadow-xs">
+    <div className="flex h-full flex-col justify-between rounded-3xl border border-slate-100 bg-white p-4 sm:p-6 shadow-xs">
       {/* Card Header */}
       <div className="flex items-center justify-between">
-        <h3 className="text-base font-bold text-slate-900">Distribución de ventas</h3>
+        <h3 className="text-sm sm:text-base font-bold text-slate-900">Distribución de ventas</h3>
         <span className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-[11px] font-semibold text-indigo-600">
           30d
         </span>
       </div>
 
       {/* Donut Chart & Legend */}
-      <div className="my-auto flex flex-col items-center gap-4 sm:flex-row sm:justify-around">
+      <div className="my-auto flex flex-col items-center gap-4 py-2 sm:flex-row sm:justify-around">
         {/* Donut with Center Text */}
-        <div className="relative h-48 w-48 shrink-0">
+        <div className="relative h-44 w-44 sm:h-48 sm:w-48 shrink-0">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Tooltip content={<CustomTooltip />} />
@@ -67,8 +67,8 @@ export const SalesDistributionDonut: FC<SalesDistributionDonutProps> = ({
                 data={categories}
                 dataKey="revenue"
                 nameKey="name"
-                innerRadius={55}
-                outerRadius={80}
+                innerRadius={50}
+                outerRadius={75}
                 paddingAngle={4}
                 cornerRadius={6}
               >
@@ -86,22 +86,25 @@ export const SalesDistributionDonut: FC<SalesDistributionDonutProps> = ({
 
           {/* Center Info */}
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center">
-            <span className="text-sm font-extrabold text-slate-900">
+            <span className="text-xs sm:text-sm font-extrabold text-slate-900">
               {formatCurrency(totalRevenue)}
             </span>
-            <span className="text-[11px] font-medium text-slate-400">Total</span>
+            <span className="text-[10px] sm:text-[11px] font-medium text-slate-400">Total</span>
           </div>
         </div>
 
         {/* Legend List */}
-        <div className="flex flex-col gap-2.5">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-2 sm:flex sm:flex-col sm:gap-2.5 w-full sm:w-auto">
           {categories.map((cat) => (
-            <div key={cat.id} className="flex items-center justify-between gap-4 text-xs">
-              <div className="flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: cat.color }} />
-                <span className="font-medium text-slate-600">{cat.name}</span>
+            <div key={cat.id} className="flex items-center justify-between gap-3 text-xs">
+              <div className="flex items-center gap-1.5 min-w-0">
+                <span
+                  className="h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full shrink-0"
+                  style={{ backgroundColor: cat.color }}
+                />
+                <span className="font-medium text-slate-600 truncate">{cat.name}</span>
               </div>
-              <span className="font-bold text-slate-900">{cat.percentage}%</span>
+              <span className="font-bold text-slate-900 shrink-0">{cat.percentage}%</span>
             </div>
           ))}
         </div>
