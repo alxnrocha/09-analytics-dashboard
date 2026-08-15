@@ -2,60 +2,40 @@ import { DashboardLayout } from './components/layout/DashboardLayout';
 import { Card } from './components/ui/Card';
 import { Badge } from './components/ui/Badge';
 import { Button } from './components/ui/Button';
+import { KpiGrid } from './components/dashboard/KpiGrid';
 import { useDashboardData } from './hooks/useDashboardData';
+import { computeKpiMetrics } from './utils/metrics';
 import { RefreshCw, AlertCircle } from 'lucide-react';
 
 export default function App() {
   const { data, isLoading, isError, error, refetch, isFetching } = useDashboardData();
 
+  const metrics = data ? computeKpiMetrics(data) : null;
+
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        {/* Status & Actions Bar */}
-        <Card className="border-indigo-100 bg-white/80 backdrop-blur-xs">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-lg font-semibold text-slate-900">Panel de Métricas</h2>
-                <Badge tone="brand">TanStack Query v5</Badge>
-                {isFetching && !isLoading && <Badge tone="info">Actualizando...</Badge>}
-              </div>
-              <p className="mt-1 text-sm text-slate-500">
-                Data fetching reactivo configurado con TanStack Query y Mock API.
-              </p>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button variant="secondary" size="sm" onClick={() => refetch()} disabled={isFetching}>
-                <RefreshCw className={`h-3.5 w-3.5 ${isFetching ? 'animate-spin' : ''}`} />
-                Recargar datos
-              </Button>
-            </div>
+        {/* Status Bar */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Badge tone="brand">Panel en vivo</Badge>
+            {isFetching && !isLoading && <Badge tone="info">Sincronizando...</Badge>}
           </div>
-        </Card>
-
-        {/* Loading State */}
-        {isLoading && (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {[1, 2, 3, 4].map((n) => (
-              <Card
-                key={n}
-                className="flex h-28 items-center justify-center animate-pulse bg-white/60"
-              >
-                <span className="text-sm font-medium text-slate-400">Cargando métricas...</span>
-              </Card>
-            ))}
-          </div>
-        )}
+          <Button variant="secondary" size="sm" onClick={() => refetch()} disabled={isFetching}>
+            <RefreshCw className={`h-3.5 w-3.5 ${isFetching ? 'animate-spin' : ''}`} />
+            Actualizar
+          </Button>
+        </div>
 
         {/* Error State */}
         {isError && (
           <Card className="border-red-200 bg-red-50/50">
             <div className="flex items-start gap-3">
-              <AlertCircle className="h-5 w-5 text-red-500 shrink-0 mt-0.5" />
+              <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-500" />
               <div className="flex-1">
-                <h3 className="text-sm font-semibold text-red-800">Error al cargar datos</h3>
+                <h3 className="text-sm font-semibold text-red-800">Error al cargar métricas</h3>
                 <p className="mt-0.5 text-sm text-red-600">
-                  {error?.message || 'No se pudieron recuperar los datos del dashboard.'}
+                  {error?.message || 'No se pudieron calcular los KPIs.'}
                 </p>
                 <div className="mt-3">
                   <Button variant="danger" size="sm" onClick={() => refetch()}>
@@ -67,45 +47,37 @@ export default function App() {
           </Card>
         )}
 
-        {/* Data Loaded / Placeholders */}
-        {!isLoading && !isError && data && (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <Card className="flex flex-col justify-between border-slate-100 bg-white">
-              <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
-                Pedidos Totales
-              </span>
-              <span className="text-2xl font-bold text-slate-900">{data.orders.length}</span>
-              <span className="text-xs text-emerald-600 font-medium">
-                Listo para cálculo de KPIs
+        {/* KPI Cards Grid */}
+        {isLoading && (
+          <KpiGrid
+            isLoading
+            metrics={{
+              revenue: 0,
+              revenueDelta: 0,
+              ordersCount: 0,
+              ordersDelta: 0,
+              customersCount: 0,
+              customersDelta: 0,
+              averageTicket: 0,
+              averageTicketDelta: 0,
+            }}
+          />
+        )}
+
+        {!isLoading && metrics && <KpiGrid metrics={metrics} />}
+
+        {/* Placeholders for upcoming charts and table (#7, #8, #9) */}
+        {!isLoading && !isError && (
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+            <Card className="flex h-72 items-center justify-center border-dashed border-slate-200 bg-white/50 lg:col-span-2">
+              <span className="text-sm font-medium text-slate-400">
+                Gráfico de Ingresos por periodo (#7)
               </span>
             </Card>
-
-            <Card className="flex flex-col justify-between border-slate-100 bg-white">
-              <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
-                Productos Activos
+            <Card className="flex h-72 items-center justify-center border-dashed border-slate-200 bg-white/50">
+              <span className="text-sm font-medium text-slate-400">
+                Distribución de ventas (#8)
               </span>
-              <span className="text-2xl font-bold text-slate-900">{data.products.length}</span>
-              <span className="text-xs text-slate-500">
-                {data.categories.length} categorías registradas
-              </span>
-            </Card>
-
-            <Card className="flex flex-col justify-between border-slate-100 bg-white">
-              <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
-                Clientes
-              </span>
-              <span className="text-2xl font-bold text-slate-900">{data.customers.length}</span>
-              <span className="text-xs text-slate-500">Base de clientes sincronizada</span>
-            </Card>
-
-            <Card className="flex flex-col justify-between border-slate-100 bg-white">
-              <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
-                Estado de Caché
-              </span>
-              <span className="text-sm font-semibold text-indigo-600">
-                Fresca (5 min staleTime)
-              </span>
-              <span className="text-xs text-slate-400">Query Key: ['dashboard']</span>
             </Card>
           </div>
         )}
