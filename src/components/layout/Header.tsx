@@ -1,5 +1,6 @@
 import type { FC } from 'react';
 import { Search, Bell, Menu } from 'lucide-react';
+import { useFilterStore } from '../../store/filterStore';
 
 interface HeaderProps {
   onMenuToggle?: () => void;
@@ -12,6 +13,8 @@ export const Header: FC<HeaderProps> = ({
   userName = 'María',
   userAvatar = 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80',
 }) => {
+  const { searchQuery, setSearchQuery } = useFilterStore();
+
   return (
     <header className="flex flex-col gap-4 py-6 md:flex-row md:items-center md:justify-between">
       {/* Title & Mobile Toggle */}
@@ -37,13 +40,15 @@ export const Header: FC<HeaderProps> = ({
 
       {/* Actions: Search, Notifications & Avatar */}
       <div className="flex items-center gap-3 self-end md:self-auto">
-        {/* Search Bar */}
+        {/* Search Bar connected to Zustand store */}
         <div className="relative">
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
             <Search className="h-4 w-4" />
           </div>
           <input
             type="search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Buscar..."
             className="h-10 w-44 rounded-full border border-slate-200/90 bg-white pr-4 pl-9 text-sm text-slate-800 placeholder-slate-400 shadow-xs transition-all focus:w-60 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none sm:w-56"
           />
