@@ -1,33 +1,46 @@
+import { DashboardLayout } from './components/layout/DashboardLayout';
 import { Card } from './components/ui/Card';
-import { Button } from './components/ui/Button';
 import { Badge } from './components/ui/Badge';
+import { Button } from './components/ui/Button';
 
 export default function App() {
   return (
-    <div className="min-h-screen p-8">
-      <header className="mb-8 max-w-2xl">
-        <h1 className="text-2xl font-bold">Analytics Dashboard</h1>
-        <p className="text-slate-500">Panel de métricas en construcción.</p>
-      </header>
+    <DashboardLayout>
+      <div className="space-y-6">
+        {/* Placeholder Shell Content */}
+        <Card className="border-indigo-100 bg-white/80 backdrop-blur-xs">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <div className="flex items-center gap-2">
+                <h2 className="text-lg font-semibold text-slate-900">Panel de Métricas</h2>
+                <Badge tone="brand">Milestone 2</Badge>
+              </div>
+              <p className="mt-1 text-sm text-slate-500">
+                Estructura del dashboard configurada. Los componentes de KPI, gráficos y tabla de
+                datos se integrarán en las próximas etapas.
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button variant="secondary" size="sm">
+                Documentación
+              </Button>
+              <Button size="sm">Ver Métricas</Button>
+            </div>
+          </div>
+        </Card>
 
-      <Card className="max-w-2xl">
-        <div className="flex flex-wrap items-center gap-3">
-          <Badge tone="brand">Brand</Badge>
-          <Badge tone="success">Success</Badge>
-          <Badge tone="warning">Warning</Badge>
-          <Badge tone="danger">Danger</Badge>
-          <Badge tone="info">Info</Badge>
-          <Badge>Neutral</Badge>
+        {/* Grid Preview Placeholders */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {['Ingresos', 'Pedidos', 'Clientes', 'Ticket medio'].map((title) => (
+            <Card
+              key={title}
+              className="flex h-28 items-center justify-center border-dashed border-slate-200 bg-white/40"
+            >
+              <span className="text-sm font-medium text-slate-400">KPI: {title}</span>
+            </Card>
+          ))}
         </div>
-
-        <div className="mt-4 flex flex-wrap items-center gap-3">
-          <Button>Primary</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="ghost">Ghost</Button>
-          <Button variant="danger">Danger</Button>
-          <Button isLoading>Loading</Button>
-        </div>
-      </Card>
-    </div>
+      </div>
+    </DashboardLayout>
   );
 }
