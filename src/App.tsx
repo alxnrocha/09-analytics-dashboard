@@ -4,14 +4,17 @@ import { Badge } from './components/ui/Badge';
 import { Button } from './components/ui/Button';
 import { KpiGrid } from './components/dashboard/KpiGrid';
 import { RevenueChart } from './components/dashboard/RevenueChart';
+import { SalesDistributionDonut } from './components/dashboard/SalesDistributionDonut';
+import { CategoryBarChart } from './components/dashboard/CategoryBarChart';
 import { useDashboardData } from './hooks/useDashboardData';
-import { computeKpiMetrics } from './utils/metrics';
+import { computeKpiMetrics, computeCategoryBreakdown } from './utils/metrics';
 import { RefreshCw, AlertCircle } from 'lucide-react';
 
 export default function App() {
   const { data, isLoading, isError, error, refetch, isFetching } = useDashboardData();
 
   const metrics = data ? computeKpiMetrics(data) : null;
+  const categoriesBreakdown = data ? computeCategoryBreakdown(data) : [];
 
   return (
     <DashboardLayout>
@@ -36,7 +39,7 @@ export default function App() {
               <div className="flex-1">
                 <h3 className="text-sm font-semibold text-red-800">Error al cargar métricas</h3>
                 <p className="mt-0.5 text-sm text-red-600">
-                  {error?.message || 'No se pudieron calcular los KPIs.'}
+                  {error?.message || 'No se pudieron calcular los datos.'}
                 </p>
                 <div className="mt-3">
                   <Button variant="danger" size="sm" onClick={() => refetch()}>
@@ -67,16 +70,31 @@ export default function App() {
 
         {!isLoading && metrics && <KpiGrid metrics={metrics} />}
 
-        {/* Revenue Chart and Category Placeholder Grid */}
+        {/* Charts Row 1: Time-Series Revenue + Donut Distribution */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <RevenueChart orders={data?.orders || []} isLoading={isLoading} />
           </div>
 
           <div className="lg:col-span-1">
-            <Card className="flex h-full min-h-[320px] items-center justify-center border-dashed border-slate-200 bg-white/50">
+            <SalesDistributionDonut
+              categories={categoriesBreakdown}
+              totalRevenue={metrics?.revenue || 0}
+              isLoading={isLoading}
+            />
+          </div>
+        </div>
+
+        {/* Charts Row 2: Category Breakdown Bar Chart + Table Placeholder */}
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <div className="lg:col-span-2">
+            <CategoryBarChart categories={categoriesBreakdown} isLoading={isLoading} />
+          </div>
+
+          <div className="lg:col-span-1">
+            <Card className="flex h-full min-h-[300px] items-center justify-center border-dashed border-slate-200 bg-white/50">
               <span className="text-sm font-medium text-slate-400">
-                Distribución de ventas (#8)
+                Productos destacados / Tabla (#9)
               </span>
             </Card>
           </div>
