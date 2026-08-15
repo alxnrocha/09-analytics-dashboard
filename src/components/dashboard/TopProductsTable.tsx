@@ -35,7 +35,10 @@ export const TopProductsTable: FC<TopProductsTableProps> = ({ products, isLoadin
                   className="h-8 w-8 shrink-0 rounded-xl object-cover ring-1 ring-slate-100"
                 />
               ) : (
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-400">
+                <div
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-400"
+                  aria-hidden="true"
+                >
                   <Package className="h-4 w-4" />
                 </div>
               )}
@@ -66,7 +69,11 @@ export const TopProductsTable: FC<TopProductsTableProps> = ({ products, isLoadin
           return (
             <div className="flex items-center justify-end gap-1.5 font-bold text-slate-900 text-xs">
               <span>{formatCurrency(getValue<number>())}</span>
-              {isHot && <span title="Producto estrella">🔥</span>}
+              {isHot && (
+                <span title="Producto estrella" aria-label="Producto estrella">
+                  🔥
+                </span>
+              )}
             </div>
           );
         },
@@ -86,7 +93,11 @@ export const TopProductsTable: FC<TopProductsTableProps> = ({ products, isLoadin
 
   if (isLoading) {
     return (
-      <div className="flex h-full min-h-[300px] flex-col rounded-3xl border border-slate-100 bg-white p-6 shadow-xs">
+      <div
+        role="status"
+        aria-label="Cargando tabla de productos..."
+        className="flex h-full min-h-[300px] flex-col rounded-3xl border border-slate-100 bg-white p-6 shadow-xs"
+      >
         <div className="h-6 w-44 animate-pulse rounded-lg bg-slate-100" />
         <div className="mt-6 flex flex-col gap-3">
           {[1, 2, 3, 4, 5].map((i) => (
@@ -98,13 +109,17 @@ export const TopProductsTable: FC<TopProductsTableProps> = ({ products, isLoadin
   }
 
   return (
-    <div className="flex h-full flex-col justify-between rounded-3xl border border-slate-100 bg-white p-6 shadow-xs">
+    <section
+      aria-label="Productos destacados"
+      className="flex h-full flex-col justify-between rounded-3xl border border-slate-100 bg-white p-6 shadow-xs"
+    >
       {/* Header */}
       <div className="mb-3 flex items-center justify-between">
         <h3 className="text-base font-bold text-slate-900">Productos destacados</h3>
         <button
           type="button"
-          className="text-xs font-semibold text-indigo-600 hover:text-indigo-700 hover:underline"
+          className="text-xs font-semibold text-indigo-600 hover:text-indigo-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-lg px-1.5 py-0.5"
+          aria-label="Ver todos los productos"
         >
           Ver todos
         </button>
@@ -117,30 +132,43 @@ export const TopProductsTable: FC<TopProductsTableProps> = ({ products, isLoadin
         </div>
       ) : (
         <div className="overflow-x-auto">
-          <table className="w-full text-left">
+          <table className="w-full text-left border-collapse">
+            <caption className="sr-only">
+              Tabla de productos más destacados ordenada por ingresos y ventas
+            </caption>
             <thead>
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id} className="border-b border-slate-100">
                   {headerGroup.headers.map((header) => {
                     const canSort = header.column.getCanSort();
                     const isSorted = header.column.getIsSorted();
+                    const sortDirection =
+                      isSorted === 'asc'
+                        ? 'ascending'
+                        : isSorted === 'desc'
+                          ? 'descending'
+                          : 'none';
 
                     return (
                       <th
                         key={header.id}
-                        onClick={header.column.getToggleSortingHandler()}
+                        scope="col"
+                        aria-sort={canSort ? sortDirection : undefined}
                         className={`pb-2.5 text-[11px] font-semibold uppercase tracking-wider text-slate-400 select-none ${
                           header.id === 'revenue' ? 'text-right' : ''
-                        } ${canSort ? 'cursor-pointer hover:text-slate-700' : ''}`}
+                        }`}
                       >
-                        <div
-                          className={`inline-flex items-center gap-1 ${
-                            header.id === 'revenue' ? 'justify-end w-full' : ''
-                          }`}
-                        >
-                          {flexRender(header.column.columnDef.header, header.getContext())}
-                          {canSort && (
-                            <span className="text-slate-400">
+                        {canSort ? (
+                          <button
+                            type="button"
+                            onClick={header.column.getToggleSortingHandler()}
+                            className={`inline-flex items-center gap-1 hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded px-1 py-0.5 ${
+                              header.id === 'revenue' ? 'justify-end w-full' : ''
+                            }`}
+                            aria-label={`Ordenar por ${header.column.columnDef.header as string}`}
+                          >
+                            {flexRender(header.column.columnDef.header, header.getContext())}
+                            <span className="text-slate-400" aria-hidden="true">
                               {isSorted === 'asc' ? (
                                 <ArrowUp className="h-3 w-3" />
                               ) : isSorted === 'desc' ? (
@@ -149,8 +177,10 @@ export const TopProductsTable: FC<TopProductsTableProps> = ({ products, isLoadin
                                 <ArrowUpDown className="h-3 w-3 opacity-40" />
                               )}
                             </span>
-                          )}
-                        </div>
+                          </button>
+                        ) : (
+                          flexRender(header.column.columnDef.header, header.getContext())
+                        )}
                       </th>
                     );
                   })}
@@ -177,6 +207,6 @@ export const TopProductsTable: FC<TopProductsTableProps> = ({ products, isLoadin
           </table>
         </div>
       )}
-    </div>
+    </section>
   );
 };
