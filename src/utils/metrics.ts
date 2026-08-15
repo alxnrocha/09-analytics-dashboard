@@ -1,5 +1,7 @@
+import { subDays, parseISO, isAfter } from 'date-fns';
 import type { DashboardData } from '../services/mockApi';
 import type { Order } from '../types/analytics';
+import type { DatePreset } from '../store/filterStore';
 
 export interface KpiMetrics {
   revenue: number;
@@ -39,6 +41,88 @@ export interface TopProductItem {
   imageUrl?: string;
 }
 
+export function filterDashboardData(
+  data: DashboardData,
+  filters: {
+    selectedCategory: string;
+    datePreset: DatePreset;
+    searchQuery: string;
+  }
+): DashboardData {
+  const { selectedCategory, datePreset, searchQuery } = filters;
+  const productMap = new Map(data.products.map((p) => [p.id, p]));
+  const customerMap = new Map(data.customers.map((c) => [c.id, c.name.toLowerCase()]));
+
+  // 1. Calculate Date Cutoff
+  const allDates = data.orders.map((o) => o.orderedAt).sort();
+  const latestDateStr = allDates[allDates.length - 1] || '2026-08-13';
+  const refDate = parseISO(latestDateStr);
+
+  let cutoffDate: Date | null = null;
+  if (datePreset === '7d') cutoffDate = subDays(refDate, 7);
+  else if (datePreset === '30d') cutoffDate = subDays(refDate, 30);
+  else if (datePreset === '90d') cutoffDate = subDays(refDate, 90);
+
+  const query = searchQuery.trim().toLowerCase();
+
+  // 2. Filter Orders & Order Items
+  const filteredOrders = data.orders
+    .filter((order) => {
+      if (cutoffDate && !isAfter(parseISO(order.orderedAt), cutoffDate)) {
+        return false;
+      }
+      return true;
+    })
+    .map((order) => {
+      let matchingItems = order.items;
+
+      if (selectedCategory !== 'all') {
+        matchingItems = matchingItems.filter((item) => {
+          const product = productMap.get(item.productId);
+          return product && product.categoryId === selectedCategory;
+        });
+      }
+
+      if (query) {
+        const customerName = customerMap.get(order.customerId) || '';
+        const hasMatchingCustomer = customerName.includes(query);
+        const hasMatchingProduct = matchingItems.some((item) => {
+          const product = productMap.get(item.productId);
+          return product && product.name.toLowerCase().includes(query);
+        });
+
+        if (!hasMatchingCustomer && !hasMatchingProduct) {
+          return null;
+        }
+      }
+
+      if (matchingItems.length === 0) return null;
+
+      return {
+        ...order,
+        items: matchingItems,
+      };
+    })
+    .filter((order): order is Order => order !== null);
+
+  // 3. Filter Products
+  const filteredProducts = data.products.filter((product) => {
+    if (selectedCategory !== 'all' && product.categoryId !== selectedCategory) {
+      return false;
+    }
+    if (query && !product.name.toLowerCase().includes(query)) {
+      return false;
+    }
+    return true;
+  });
+
+  return {
+    ...data,
+    orders: filteredOrders,
+    products: filteredProducts.length > 0 ? filteredProducts : data.products,
+  };
+}
+
 export function computeKpiMetrics(data: DashboardData): KpiMetrics {
   const revenue = data.orders.reduce((sum, order) => {
     const orderSum = order.items.reduce(
@@ -50,7 +134,10 @@ export function computeKpiMetrics(data: DashboardData): KpiMetrics {
 
   const ordersCount = data.orders.length;
   const averageTicket = ordersCount > 0 ? revenue / ordersCount : 0;
-  const customersCount = data.customers.length;
+
+  const customerIdsWithOrders = new Set(data.orders.map((o) => o.customerId));
+  const customersCount =
+    customerIdsWithOrders.size > 0 ? customerIdsWithOrders.size : data.customers.length;
 
   return {
     revenue,
