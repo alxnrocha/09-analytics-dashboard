@@ -3,6 +3,7 @@ import { Card } from './components/ui/Card';
 import { Badge } from './components/ui/Badge';
 import { Button } from './components/ui/Button';
 import { KpiGrid } from './components/dashboard/KpiGrid';
+import { RevenueChart } from './components/dashboard/RevenueChart';
 import { useDashboardData } from './hooks/useDashboardData';
 import { computeKpiMetrics } from './utils/metrics';
 import { RefreshCw, AlertCircle } from 'lucide-react';
@@ -66,21 +67,20 @@ export default function App() {
 
         {!isLoading && metrics && <KpiGrid metrics={metrics} />}
 
-        {/* Placeholders for upcoming charts and table (#7, #8, #9) */}
-        {!isLoading && !isError && (
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-            <Card className="flex h-72 items-center justify-center border-dashed border-slate-200 bg-white/50 lg:col-span-2">
-              <span className="text-sm font-medium text-slate-400">
-                Gráfico de Ingresos por periodo (#7)
-              </span>
-            </Card>
-            <Card className="flex h-72 items-center justify-center border-dashed border-slate-200 bg-white/50">
+        {/* Revenue Chart and Category Placeholder Grid */}
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <div className="lg:col-span-2">
+            <RevenueChart orders={data?.orders || []} isLoading={isLoading} />
+          </div>
+
+          <div className="lg:col-span-1">
+            <Card className="flex h-full min-h-[320px] items-center justify-center border-dashed border-slate-200 bg-white/50">
               <span className="text-sm font-medium text-slate-400">
                 Distribución de ventas (#8)
               </span>
             </Card>
           </div>
-        )}
+        </div>
       </div>
     </DashboardLayout>
   );
