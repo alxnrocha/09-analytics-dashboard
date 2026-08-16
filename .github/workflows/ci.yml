@@ -1,13 +1,20 @@
-name: CI
+name: CI Pipeline & GitHub Pages Deploy
 
 on:
   pull_request:
   push:
     branches: [main]
 
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   check:
-    name: Lint, Typecheck, Test & Build
+    name: Lint, Typecheck, Test, Build & Deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -33,3 +40,10 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
