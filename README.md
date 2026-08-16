@@ -14,18 +14,6 @@
 
 ---
 
-## 📸 Vistas Reales del Sistema
-
-### 1. Vista Principal (Desktop)
-
-![SunnyShop Desktop Dashboard](./screenshots/desktop.png)
-
-### 2. Experiencia Responsive (Móvil)
-
-![SunnyShop Mobile Dashboard](./screenshots/mobile.png)
-
----
-
 ## ✨ Características Principales
 
 ### 🚀 Experiencia de Usuario & Frontend
