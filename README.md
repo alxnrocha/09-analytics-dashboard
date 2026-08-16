@@ -40,9 +40,6 @@
 │   └── schema-erd.md
 ├── sql/                           # Esquema SQL relacional (DDL)
 │   └── schema.sql
-├── screenshots/                   # Capturas de pantalla reales
-│   ├── desktop.png
-│   └── mobile.png
 ├── src/
 │   ├── components/
 │   │   ├── dashboard/             # RevenueChart, CategoryBarChart, KpiCard, TopProductsTable
