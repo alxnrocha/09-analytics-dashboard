@@ -1,189 +1,117 @@
-# SunnyShop — Analytics Dashboard 📊
+# SunnyShop — Panel de Analíticas & Métricas SaaS E-Commerce
 
-[![CI](https://github.com/alxnrocha/09-analytics-dashboard/actions/workflows/ci.yml/badge.svg)](https://github.com/alxnrocha/09-analytics-dashboard/actions/workflows/ci.yml)
-[![React](https://img.shields.io/badge/React-19-blue.svg)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-6.0-blue.svg)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-8.1-purple.svg)](https://vitejs.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38bdf8.svg)](https://tailwindcss.com/)
-[![TanStack Query](https://img.shields.io/badge/TanStack_Query-v5-ff4154.svg)](https://tanstack.com/query/latest)
-[![Zustand](https://img.shields.io/badge/Zustand-v5-orange.svg)](https://github.com/pmndrs/zustand)
-[![Recharts](https://img.shields.io/badge/Recharts-v3-22c55e.svg)](https://recharts.org/)
-[![Vitest](https://img.shields.io/badge/Vitest-v4-yellow.svg)](https://vitest.dev/)
+[![CI & Deploy](https://github.com/alxnrocha/analytics-dashboard/actions/workflows/ci.yml/badge.svg)](https://github.com/alxnrocha/analytics-dashboard/actions)
+[![Demo GitHub Pages](https://img.shields.io/badge/Demo-GitHub_Pages-22c55e?style=for-the-badge&logo=github&logoColor=white)](https://alxnrocha.github.io/analytics-dashboard/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue.svg)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19.2-61dafb.svg)](https://react.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4.0-38bdf8.svg)](https://tailwindcss.com/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
 
-> **SunnyShop** es un panel de análisis de ventas moderno, reactivo y accesible para e-commerce. Proporciona visualización en tiempo real de ingresos, pedidos, clientes y ticket medio con desglose por categorías y productos estrella.
+**SunnyShop** es un panel de control y analíticas de ventas moderno, reactivo y accesible para plataformas de comercio electrónico. Proporciona visualización en tiempo real de métricas de ingresos, pedidos, clientes únicos y ticket medio, con desgloses interactivos por categoría y catálogo de productos estrella.
+
+- 🌐 **Demo en Vivo (GitHub Pages):** [https://alxnrocha.github.io/analytics-dashboard/](https://alxnrocha.github.io/analytics-dashboard/)
+- 📦 **Repositorio GitHub:** [https://github.com/alxnrocha/analytics-dashboard](https://github.com/alxnrocha/analytics-dashboard)
 
 ---
 
-## 📸 Capturas de Pantalla
+## 📸 Vistas Reales del Sistema
 
-### 🖥️ Vista Desktop
+### 1. Vista Principal (Desktop)
 
-![SunnyShop Desktop Dashboard](screenshots/desktop.png)
+![SunnyShop Desktop Dashboard](./screenshots/desktop.png)
 
-### 📱 Vista Mobile (Mobile-First)
+### 2. Experiencia Responsive (Móvil)
 
-<div align="center">
-  <img src="screenshots/mobile.png" alt="SunnyShop Mobile Dashboard" width="380" />
-</div>
+![SunnyShop Mobile Dashboard](./screenshots/mobile.png)
 
 ---
 
 ## ✨ Características Principales
 
-- **📊 Tarjetas KPI Reactivas:** Ingresos totales (€), número de pedidos, clientes únicos y ticket medio con deltas porcentuales respecto al período anterior.
-- **📈 Gráfico de Serie Temporal de Ingresos:** Gráfico de área interactivo con degradado violeta (`Recharts`), selector dinámico de período (7, 30 y 90 días) y tooltips formateados.
-- **🍩 Desglose de Ventas por Categoría:** Gráfico de rosca (_Donut_) con total central y leyenda con porcentajes, acompañado de gráfico de barras verticales en formato píldora estilizadas.
-- **🏆 Tabla de Productos Destacados:** Construida con `@tanstack/react-table` v8, ordenación por cabeceras, miniaturas y badges de producto estrella (🔥).
-- **⚡ Filtros Globales con Zustand + date-fns:** Filtrado reactivo por categoría, rango de fechas y buscador en vivo que actualiza todos los componentes de manera síncrona.
-- **🛡️ Resiliencia y Accesibilidad:** `ErrorBoundary` para excepciones no controladas, primitivas `Skeleton` con `role="status"` y `aria-busy`, estados de error con reintento y estado vacío.
-- **📱 100% Mobile-First & Responsivo:** Menú lateral tipo cajón con atajo `Escape`, layouts fluidos y áreas de toque accesibles.
+### 🚀 Experiencia de Usuario & Frontend
+- **Tarjetas KPI Reactivas:** Ingresos totales (€), volumen de pedidos, clientes únicos y ticket promedio con deltas porcentuales respecto al período anterior.
+- **Gráfico de Serie Temporal de Ingresos:** Gráfico de área interactivo con degradado (`Recharts`), selector dinámico de período (7, 30 y 90 días) y tooltips contextuales.
+- **Desglose de Ventas por Categoría:** Gráfico tipo Donut con total central y distribución porcentual acompañado de barras estilizadas.
+- **Tabla de Productos Destacados:** Implementada con `@tanstack/react-table` v8, ordenación por cabeceras, miniaturas y badges de producto estrella.
+- **Filtros Globales con Zustand + date-fns:** Filtrado reactivo por categoría, rango de fechas y buscador en vivo con sincronización instantánea.
+- **Resiliencia & Accesibilidad:** Integración de `ErrorBoundary`, esqueletos de carga (`Skeleton` con `role="status"` y `aria-busy`), y manejo de estados vacíos.
+
+### 🛡️ Modelo de Base de Datos Relacional
+- Esquema DDL SQL en [`sql/schema.sql`](sql/schema.sql) y diagrama DER Mermaid en [`docs/schema-erd.md`](docs/schema-erd.md) para categorías, productos, clientes, pedidos y líneas de pedido.
 
 ---
 
-## 🛠️ Stack Tecnológico
-
-| Capa                         | Tecnología                                                                         |
-| :--------------------------- | :--------------------------------------------------------------------------------- |
-| **Framework UI**             | [React 19](https://react.dev/) + [Vite 8](https://vitejs.dev/)                     |
-| **Lenguaje**                 | [TypeScript 6](https://www.typescriptlang.org/)                                    |
-| **Estilos & Tokens**         | [Tailwind CSS v4](https://tailwindcss.com/) (`@theme`)                             |
-| **Data Fetching & Cache**    | [@tanstack/react-query v5](https://tanstack.com/query/latest)                      |
-| **Estado Global de Filtros** | [Zustand v5](https://github.com/pmndrs/zustand)                                    |
-| **Manejo de Fechas**         | [date-fns v4](https://date-fns.org/)                                               |
-| **Visualización de Datos**   | [Recharts v3](https://recharts.org/)                                               |
-| **Tablas de Datos**          | [@tanstack/react-table v8](https://tanstack.com/table/latest)                      |
-| **Iconografía**              | [Lucide React](https://lucide.dev/)                                                |
-| **Linter & Formateo**        | [oxlint](https://oxc.rs/) + [Prettier](https://prettier.io/)                       |
-| **Testing**                  | [Vitest v4](https://vitest.dev/) + [Testing Library](https://testing-library.com/) |
-| **CI / CD**                  | GitHub Actions (`ci.yml`)                                                          |
-
----
-
-## 📁 Estructura del Proyecto
+## 🏛️ Estructura del Proyecto
 
 ```text
 09-analytics-dashboard/
-├── .github/workflows/ci.yml       # Pipeline CI en GitHub Actions
-├── docs/                          # Documentación arquitectónica y DER
-│   └── schema-erd.md              # Diagrama Entidad-Relación Mermaid
-├── sql/                           # Schema SQL relacional
-│   └── schema.sql                 # Definición DDL (5 tablas)
-├── screenshots/                   # Capturas de pantalla automatizadas
-│   ├── desktop.png                # Vista escritorio (1440x900)
-│   └── mobile.png                 # Vista móvil (390x844)
+├── .github/workflows/ci.yml       # Pipeline de CI y Deploy automático en Pages
+├── docs/                          # Documentación arquitectónica y diagrama DER
+│   └── schema-erd.md
+├── sql/                           # Esquema SQL relacional (DDL)
+│   └── schema.sql
+├── screenshots/                   # Capturas de pantalla reales
+│   ├── desktop.png
+│   └── mobile.png
 ├── src/
 │   ├── components/
-│   │   ├── dashboard/             # Componentes específicos del panel
-│   │   │   ├── CategoryBarChart.tsx
-│   │   │   ├── FilterBar.tsx
-│   │   │   ├── KpiCard.tsx
-│   │   │   ├── KpiGrid.tsx
-│   │   │   ├── RevenueChart.tsx
-│   │   │   ├── SalesDistributionDonut.tsx
-│   │   │   └── TopProductsTable.tsx
-│   │   ├── layout/                # Shell, Header y Sidebar
-│   │   │   ├── DashboardLayout.tsx
-│   │   │   ├── Header.tsx
-│   │   │   └── Sidebar.tsx
-│   │   └── ui/                    # Primitivas UI reutilizables
-│   │       ├── Badge.tsx
-│   │       ├── Button.tsx
-│   │       ├── Card.tsx
-│   │       ├── EmptyState.tsx
-│   │       ├── ErrorBoundary.tsx
-│   │       ├── ErrorState.tsx
-│   │       └── Skeleton.tsx
+│   │   ├── dashboard/             # RevenueChart, CategoryBarChart, KpiCard, TopProductsTable
+│   │   ├── layout/                # Sidebar, Header y DashboardLayout
+│   │   └── ui/                    # Skeleton, ErrorBoundary, Badge, Button, Card
 │   ├── data/                      # Dataset sintético de ventas y catálogo
-│   │   └── mockData.ts
-│   ├── hooks/                     # Custom hooks (TanStack Query)
-│   │   └── useDashboardData.ts
-│   ├── services/                  # Capa de servicio mock-first con delay
-│   │   └── mockApi.ts
-│   ├── store/                     # Zustand store global de filtros
-│   │   └── filterStore.ts
-│   ├── test/                      # Configuración de pruebas Vitest
-│   │   └── setup.ts
-│   ├── types/                     # Interfaces TypeScript de dominio
-│   │   └── analytics.ts
-│   ├── utils/                     # Métricas, transformaciones y formateadores
-│   │   ├── formatters.ts
-│   │   ├── metrics.ts
-│   │   └── metrics.test.ts
+│   ├── hooks/                     # Custom hooks con TanStack Query
+│   ├── services/                  # Capa de servicio mock-first
+│   ├── store/                     # Store global de filtros con Zustand
+│   ├── types/                     # Tipos de analíticas y dominio
+│   ├── utils/                     # Métricas y formateadores de moneda/fechas
 │   ├── App.tsx                    # Orquestador del Dashboard
-│   ├── index.css                  # Tailwind CSS v4 con tokens de diseño
-│   └── main.tsx                   # Entrada con ErrorBoundary y QueryClient
-├── DECISIONS.md                   # Registro de decisiones de arquitectura (ADR)
-├── package.json
-└── vite.config.ts
+│   └── main.tsx                   # Entrada React 19
+├── index.html                     # Entrypoint HTML5
+├── DECISIONS.md                   # Registro de decisiones de arquitectura (ADRs)
+└── vite.config.ts                 # Configuración de Vite y Tailwind v4
 ```
 
 ---
 
-## 🚀 Inicio Rápido
+## ⚡ Guía de Inicio Rápido
 
-### Prerrequisitos
-
-- Node.js >= 20.x
-- npm >= 10.x
-
-### Instalación
-
+### 1. Clonar e Instalar Dependencias
 ```bash
-# Clonar el repositorio
-git clone https://github.com/alxnrocha/09-analytics-dashboard.git
-cd 09-analytics-dashboard
-
-# Instalar dependencias
+git clone https://github.com/alxnrocha/analytics-dashboard.git
+cd analytics-dashboard
 npm install
 ```
 
-### Comandos Disponibles
+### 2. Iniciar en Modo Desarrollo
+```bash
+npm run dev
+```
+
+---
+
+## 🧪 Calidad de Código y Pruebas
 
 ```bash
-# Iniciar servidor de desarrollo en http://localhost:5173
-npm run dev
-
 # Ejecutar suite de pruebas con Vitest
-npm run test
+npm test
 
-# Verificar tipos de TypeScript
+# Verificación de tipos TypeScript
 npm run typecheck
 
-# Ejecutar linter ultrarrápido (oxlint)
+# Linter de alto rendimiento (Oxlint)
 npm run lint
 
 # Formatear código con Prettier
 npm run format
 
-# Compilar para producción en dist/
+# Compilar para producción
 npm run build
-
-# Previsualizar build de producción
-npm run preview
 ```
-
----
-
-## 📐 Modelo de Datos y DER
-
-El proyecto modela una arquitectura relacional completa para comercio electrónico:
-
-- `categories`: Clasificación de catálogo con códigos de color.
-- `products`: Catálogo de productos con precio y stock.
-- `customers`: Clientes con país y fecha de registro.
-- `orders`: Pedidos de compra con estados (_Paid_, _Pending_, _Cancelled_).
-- `order_items`: Detalle de productos por pedido con cantidad y precio unitario.
-
-Consulta la definición DDL en [`sql/schema.sql`](sql/schema.sql) y el diagrama interactivo en [`docs/schema-erd.md`](docs/schema-erd.md).
-
----
-
-## 📜 Registro de Decisiones (ADR)
-
-Para conocer las justificaciones técnicas y los compromisos de diseño adoptados en este proyecto, consulta [`DECISIONS.md`](DECISIONS.md).
 
 ---
 
 ## 📄 Licencia
 
-Distribuido bajo la Licencia MIT. Consulta `LICENSE` para más información.
+Este proyecto está bajo la Licencia MIT. Consulte el archivo [LICENSE](./LICENSE) para más detalles.
+
+**Autor:** [Alexandre Rocha](https://github.com/alxnrocha)
