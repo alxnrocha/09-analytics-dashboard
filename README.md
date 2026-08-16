@@ -17,6 +17,7 @@
 ## ✨ Características Principales
 
 ### 🚀 Experiencia de Usuario & Frontend
+
 - **Tarjetas KPI Reactivas:** Ingresos totales (€), volumen de pedidos, clientes únicos y ticket promedio con deltas porcentuales respecto al período anterior.
 - **Gráfico de Serie Temporal de Ingresos:** Gráfico de área interactivo con degradado (`Recharts`), selector dinámico de período (7, 30 y 90 días) y tooltips contextuales.
 - **Desglose de Ventas por Categoría:** Gráfico tipo Donut con total central y distribución porcentual acompañado de barras estilizadas.
@@ -25,6 +26,7 @@
 - **Resiliencia & Accesibilidad:** Integración de `ErrorBoundary`, esqueletos de carga (`Skeleton` con `role="status"` y `aria-busy`), y manejo de estados vacíos.
 
 ### 🛡️ Modelo de Base de Datos Relacional
+
 - Esquema DDL SQL en [`sql/schema.sql`](sql/schema.sql) y diagrama DER Mermaid en [`docs/schema-erd.md`](docs/schema-erd.md) para categorías, productos, clientes, pedidos y líneas de pedido.
 
 ---
@@ -55,7 +57,7 @@
 │   ├── App.tsx                    # Orquestador del Dashboard
 │   └── main.tsx                   # Entrada React 19
 ├── index.html                     # Entrypoint HTML5
-├── DECISIONS.md                   # Registro de decisiones de arquitectura (ADRs)
+├── package.json                   # Scripts y dependencias
 └── vite.config.ts                 # Configuración de Vite y Tailwind v4
 ```
 
@@ -64,6 +66,7 @@
 ## ⚡ Guía de Inicio Rápido
 
 ### 1. Clonar e Instalar Dependencias
+
 ```bash
 git clone https://github.com/alxnrocha/analytics-dashboard.git
 cd analytics-dashboard
@@ -71,6 +74,7 @@ npm install
 ```
 
 ### 2. Iniciar en Modo Desarrollo
+
 ```bash
 npm run dev
 ```
