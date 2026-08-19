@@ -15,85 +15,85 @@
 
 ---
 
-## ✨ Características Principales
+## 🌟 Visión General & Propuesta de Valor
 
-### 🚀 Experiencia de Usuario & Frontend
+**SunnyShop Analytics** es un dashboard analítico para directores de comercio electrónico y managers de tiendas online.
 
-- **Tarjetas KPI Reactivas:** Ingresos totales (€), volumen de pedidos, clientes únicos y ticket promedio con deltas porcentuales respecto al período anterior.
-- **Gráfico de Serie Temporal de Ingresos:** Gráfico de área interactivo con degradado (`Recharts`), selector dinámico de período (7, 30 y 90 días) y tooltips contextuales.
-- **Desglose de Ventas por Categoría:** Gráfico tipo Donut con total central y distribución porcentual acompañado de barras estilizadas.
-- **Tabla de Productos Destacados:** Implementada con `@tanstack/react-table` v8, ordenación por cabeceras, miniaturas y badges de producto estrella.
-- **Filtros Globales con Zustand + date-fns:** Filtrado reactivo por categoría, rango de fechas y buscador en vivo con sincronización instantánea.
-- **Resiliencia & Accesibilidad:** Integración de `ErrorBoundary`, esqueletos de carga (`Skeleton` con `role="status"` y `aria-busy`), y manejo de estados vacíos.
+Centraliza la visualización de ingresos en tiempo real, volumen de pedidos, desglose de ventas por categoría, ticket promedio por cliente y rendimiento del catálogo de productos estrella con filtrado temporal interactivo.
 
 ---
 
-## 🏛️ Estructura del Proyecto
+## ✨ Características Principales
+
+- **Tarjetas KPI Reactivas:** Ingresos (€), pedidos, clientes únicos y ticket promedio con deltas porcentuales respecto al período anterior.
+- **Gráfico de Serie Temporal de Ingresos:** Gráfico de área interactivo con Recharts, selector dinámico de período (7, 30 y 90 días) y tooltips contextuales.
+- **Desglose de Ventas por Categoría:** Gráfico tipo Donut con total central y distribución porcentual.
+- **Tabla de Productos Destacados:** Implementada con `@tanstack/react-table` v8, ordenación por columnas y badges.
+- **Filtros Globales con Zustand:** Filtrado por categoría, rango de fechas y buscador con sincronización instantánea.
+
+---
+
+## 🏛️ Arquitectura del Proyecto
 
 ```text
 09-analytics-dashboard/
-├── .github/workflows/ci.yml       # Pipeline de CI y Deploy automático en Pages
+├── index.html
 ├── src/
-│   ├── components/
-│   │   ├── dashboard/             # RevenueChart, CategoryBarChart, KpiCard, TopProductsTable
-│   │   ├── layout/                # Sidebar, Header y DashboardLayout
-│   │   └── ui/                    # Skeleton, ErrorBoundary, Badge, Button, Card
-│   ├── data/                      # Dataset sintético de ventas y catálogo
-│   ├── hooks/                     # Custom hooks con TanStack Query
-│   ├── services/                  # Capa de servicio mock-first
-│   ├── store/                     # Store global de filtros con Zustand
-│   ├── types/                     # Tipos de analíticas y dominio
-│   ├── utils/                     # Métricas y formateadores de moneda/fechas
-│   ├── App.tsx                    # Orquestador del Dashboard
-│   └── main.tsx                   # Entrada React 19
-├── index.html                     # Entrypoint HTML5
-├── package.json                   # Scripts y dependencias
-└── vite.config.ts                 # Configuración de Vite y Tailwind v4
+│   ├── components/                # KpiCards, RevenueChart, CategoryDonut, ProductTable
+│   ├── data/                      # Fixtures comerciales determinísticas
+│   ├── stores/                    # Store global Zustand
+│   ├── types/                     # Tipos TypeScript
+│   ├── App.tsx                    # Componente raíz
+│   └── main.tsx                   # Punto de entrada
+├── LICENSE
+├── package.json
+└── vite.config.ts
 ```
 
 ---
 
-## ⚡ Guía de Inicio Rápido
+## 🚀 Instalación y Puesta en Marcha
 
-### 1. Clonar e Instalar Dependencias
+### Prerrequisitos
 
-```bash
-git clone https://github.com/alxnrocha/analytics-dashboard.git
-cd analytics-dashboard
-npm install
-```
+- Node.js `>= 20.0.0`
+- npm `>= 10.0.0`
 
-### 2. Iniciar en Modo Desarrollo
+### Pasos
 
-```bash
-npm run dev
-```
+1. **Clonar el repositorio:**
+
+   ```bash
+   git clone https://github.com/alxnrocha/analytics-dashboard.git
+   cd analytics-dashboard
+   ```
+
+2. **Instalar dependencias:**
+
+   ```bash
+   npm install
+   ```
+
+3. **Ejecutar en modo desarrollo:**
+
+   ```bash
+   npm run dev
+   ```
+
+4. **Compilar para producción:**
+   ```bash
+   npm run build
+   ```
 
 ---
 
-## 🧪 Calidad de Código y Pruebas
+## 🛡️ Calidad de Código & Testing
 
-```bash
-# Ejecutar suite de pruebas con Vitest
-npm test
-
-# Verificación de tipos TypeScript
-npm run typecheck
-
-# Linter de alto rendimiento (Oxlint)
-npm run lint
-
-# Formatear código con Prettier
-npm run format
-
-# Compilar para producción
-npm run build
-```
+- **Linter & Typecheck:** Oxlint sin advertencias y TypeScript estricto.
+- **Accesibilidad (a11y):** Tooltips accesibles, foco visible y contraste cromático verificado.
 
 ---
 
 ## 📄 Licencia
 
-Este proyecto está bajo la Licencia MIT. Consulte el archivo [LICENSE](./LICENSE) para más detalles.
-
-**Autor:** [Alexandre Rocha](https://github.com/alxnrocha)
+Este proyecto se encuentra bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
