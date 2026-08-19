@@ -1,16 +1,17 @@
 # SunnyShop — Panel de Analíticas & Métricas SaaS E-Commerce
 
-[![CI & Deploy](https://github.com/alxnrocha/analytics-dashboard/actions/workflows/ci.yml/badge.svg)](https://github.com/alxnrocha/analytics-dashboard/actions)
-[![Demo GitHub Pages](https://img.shields.io/badge/Demo-GitHub_Pages-22c55e?style=for-the-badge&logo=github&logoColor=white)](https://alxnrocha.github.io/analytics-dashboard/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue.svg)](https://www.typescriptlang.org/)
-[![React](https://img.shields.io/badge/React-19.2-61dafb.svg)](https://react.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4.0-38bdf8.svg)](https://tailwindcss.com/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-GitHub_Pages-success?style=flat-square&logo=github&logoColor=white)](https://alxnrocha.github.io/analytics-dashboard/)
+[![React 19](https://img.shields.io/badge/React-19.0-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-v4.0-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Recharts](https://img.shields.io/badge/Recharts-2.15-22C55E?style=flat-square)](https://recharts.org/)
+[![TanStack Table](https://img.shields.io/badge/TanStack_Table-v8-FF4154?style=flat-square&logo=reacttable&logoColor=white)](https://tanstack.com/table/v8)
+[![Zustand](https://img.shields.io/badge/Zustand-5.0-4338CA?style=flat-square)](https://github.com/pmndrs/zustand)
+[![Vite](https://img.shields.io/badge/Vite-6.0-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
-**SunnyShop** es un panel de control y analíticas de ventas moderno, reactivo y accesible para plataformas de comercio electrónico. Proporciona visualización en tiempo real de métricas de ingresos, pedidos, clientes únicos y ticket medio, con desgloses interactivos por categoría y catálogo de productos estrella.
-
-- 🌐 **Demo en Vivo (GitHub Pages):** [https://alxnrocha.github.io/analytics-dashboard/](https://alxnrocha.github.io/analytics-dashboard/)
-- 📦 **Repositorio GitHub:** [https://github.com/alxnrocha/analytics-dashboard](https://github.com/alxnrocha/analytics-dashboard)
+> **Proyecto 09 del Portafolio Profesional** — Panel de control y analíticas de ventas moderno, reactivo y accesible para plataformas de comercio electrónico.  
+> 🔗 **Demo en Vivo en GitHub Pages:** [https://alxnrocha.github.io/analytics-dashboard/](https://alxnrocha.github.io/analytics-dashboard/)
 
 ---
 
@@ -25,10 +26,6 @@
 - **Filtros Globales con Zustand + date-fns:** Filtrado reactivo por categoría, rango de fechas y buscador en vivo con sincronización instantánea.
 - **Resiliencia & Accesibilidad:** Integración de `ErrorBoundary`, esqueletos de carga (`Skeleton` con `role="status"` y `aria-busy`), y manejo de estados vacíos.
 
-### 🛡️ Modelo de Base de Datos Relacional
-
-- Esquema DDL SQL en [`sql/schema.sql`](sql/schema.sql) y diagrama DER Mermaid en [`docs/schema-erd.md`](docs/schema-erd.md) para categorías, productos, clientes, pedidos y líneas de pedido.
-
 ---
 
 ## 🏛️ Estructura del Proyecto
@@ -36,10 +33,6 @@
 ```text
 09-analytics-dashboard/
 ├── .github/workflows/ci.yml       # Pipeline de CI y Deploy automático en Pages
-├── docs/                          # Documentación arquitectónica y diagrama DER
-│   └── schema-erd.md
-├── sql/                           # Esquema SQL relacional (DDL)
-│   └── schema.sql
 ├── src/
 │   ├── components/
 │   │   ├── dashboard/             # RevenueChart, CategoryBarChart, KpiCard, TopProductsTable
