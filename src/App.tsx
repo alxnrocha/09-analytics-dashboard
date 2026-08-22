@@ -1,3 +1,4 @@
+import { ProjectBadge } from './components/ProjectBadge';
 import { DashboardLayout } from './components/layout/DashboardLayout';
 import { Badge } from './components/ui/Badge';
 import { Button } from './components/ui/Button';
@@ -135,6 +136,7 @@ export default function App() {
             </div>
           </>
         )}
+        <ProjectBadge />
       </div>
     </DashboardLayout>
   );
