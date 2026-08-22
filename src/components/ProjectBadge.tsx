@@ -17,7 +17,7 @@ export const ProjectBadge: React.FC = () => {
 
   return (
     <aside
-      aria-label="Informações do Projeto"
+      aria-label="Project Information"
       style={{
         position: 'fixed',
         bottom: '16px',
@@ -72,7 +72,7 @@ export const ProjectBadge: React.FC = () => {
             href="https://github.com/alxnrocha"
             target="_blank"
             rel="noopener noreferrer"
-            title="Ver perfil de Alexandre Rocha no GitHub"
+            title="View Alexandre Rocha's GitHub profile"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -121,8 +121,8 @@ export const ProjectBadge: React.FC = () => {
           </a>
           <button
             onClick={() => setIsVisible(false)}
-            title="Fechar (retorna em 5s)"
-            aria-label="Fechar"
+            title="Close (returns in 5s)"
+            aria-label="Close"
             style={{
               background: 'transparent',
               border: 'none',
@@ -184,7 +184,7 @@ export const ProjectBadge: React.FC = () => {
             '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif',
         }}
       >
-        Painel de Métricas e Analítica de E-Commerce • Desenvolvido por{' '}
+        E-Commerce Sales Metrics & Performance Analytics • Developed by{' '}
         <a
           href="https://github.com/alxnrocha"
           target="_blank"
@@ -228,7 +228,7 @@ export const ProjectBadge: React.FC = () => {
                 display: 'inline-block',
               }}
             />
-            ATIVO
+            ACTIVE
           </span>
           <span style={{ color: '#484f58' }}>|</span>
           <span
