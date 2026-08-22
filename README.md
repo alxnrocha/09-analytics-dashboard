@@ -1,39 +1,47 @@
 # SunnyShop — Panel de Analíticas & Métricas SaaS E-Commerce
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-GitHub_Pages-success?style=flat-square&logo=github&logoColor=white)](https://alxnrocha.github.io/analytics-dashboard/)
-[![React 19](https://img.shields.io/badge/React-19.0-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-v4.0-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![Recharts](https://img.shields.io/badge/Recharts-2.15-22C55E?style=flat-square)](https://recharts.org/)
-[![TanStack Table](https://img.shields.io/badge/TanStack_Table-v8-FF4154?style=flat-square&logo=reacttable&logoColor=white)](https://tanstack.com/table/v8)
-[![Zustand](https://img.shields.io/badge/Zustand-5.0-4338CA?style=flat-square)](https://github.com/pmndrs/zustand)
-[![Vite](https://img.shields.io/badge/Vite-6.0-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
+<div align="center">
 
-> **Proyecto 09 del Portafolio Profesional** — Panel de control y analíticas de ventas moderno, reactivo y accesible para plataformas de comercio electrónico.  
-> 🔗 **Demo en Vivo en GitHub Pages:** [https://alxnrocha.github.io/analytics-dashboard/](https://alxnrocha.github.io/analytics-dashboard/)
+![React 19](https://img.shields.io/badge/React-19.0-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Zustand](https://img.shields.io/badge/Zustand-5.0-4338CA?style=for-the-badge)
+![TanStack Table](https://img.shields.io/badge/TanStack_Table-v8-FF4154?style=for-the-badge&logo=reacttable&logoColor=white)
+![Recharts](https://img.shields.io/badge/Recharts-2.15-22C55E?style=for-the-badge)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4.0-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Deploy](https://img.shields.io/badge/Deploy-GitHub%20Pages-22C55E?style=for-the-badge&logo=github&logoColor=white)
+
+**Panel de control y analíticas de ventas moderno, reactivo y de alta densidad para comercio electrónico con gráficos Recharts, tablas TanStack Table v8 y filtros globales con Zustand.**
+
+[🚀 Demo en Vivo](https://alxnrocha.github.io/analytics-dashboard/) • [📂 Repositorio en GitHub](https://github.com/alxnrocha/analytics-dashboard)
+
+</div>
 
 ---
 
-## 🌟 Visión General & Propuesta de Valor
+## 🏛️ Arquitectura y Flujo de Datos
 
-**SunnyShop Analytics** es un dashboard analítico para directores de comercio electrónico y managers de tiendas online.
-
-Centraliza la visualización de ingresos en tiempo real, volumen de pedidos, desglose de ventas por categoría, ticket promedio por cliente y rendimiento del catálogo de productos estrella con filtrado temporal interactivo.
+```mermaid
+graph TD
+    Data[Motor de Datos Comerciales] --> Store[Zustand Store: Filtros de Fecha & Categoría]
+    Store --> KPIs[KpiCards: Ingresos, Pedidos, Clientes & AOV]
+    Store --> AreaChart[Recharts: Serie Temporal de Ingresos 7d / 30d / 90d]
+    Store --> DonutChart[Recharts: Desglose de Ventas por Categoría]
+    Store --> TanStackTable[TanStack Table v8: Productos Top con Multi-Sort]
+```
 
 ---
 
 ## ✨ Características Principales
 
-- **Tarjetas KPI Reactivas:** Ingresos (€), pedidos, clientes únicos y ticket promedio con deltas porcentuales respecto al período anterior.
-- **Gráfico de Serie Temporal de Ingresos:** Gráfico de área interactivo con Recharts, selector dinámico de período (7, 30 y 90 días) y tooltips contextuales.
-- **Desglose de Ventas por Categoría:** Gráfico tipo Donut con total central y distribución porcentual.
-- **Tabla de Productos Destacados:** Implementada con `@tanstack/react-table` v8, ordenación por columnas y badges.
-- **Filtros Globales con Zustand:** Filtrado por categoría, rango de fechas y buscador con sincronización instantánea.
+- **Tarjetas KPI Reactivas:** Ingresos (€), pedidos, clientes únicos y ticket promedio (AOV) con deltas porcentuales respecto al período anterior.
+- **Gráfico de Serie Temporal de Ingresos:** Gráfico de área interactivo con Recharts, selector dinámico de período (7, 30 y 90 días) y tooltips contextuales formateados.
+- **Desglose de Ventas por Categoría:** Gráfico tipo Donut con total central y distribución porcentual calculada.
+- **Tabla de Productos Destacados:** Implementada con `@tanstack/react-table` v8, ordenación por columnas, búsqueda y badges de stock.
+- **Filtros Globales con Zustand:** Filtrado por categoría, rango de fechas y buscador con sincronización instantánea en todos los widgets.
 
 ---
 
-## 🏛️ Arquitectura del Proyecto
+## 🗂️ Estructura del Proyecto
 
 ```text
 09-analytics-dashboard/
@@ -42,11 +50,11 @@ Centraliza la visualización de ingresos en tiempo real, volumen de pedidos, des
 │   ├── components/                # KpiCards, RevenueChart, CategoryDonut, ProductTable
 │   ├── data/                      # Fixtures comerciales determinísticas
 │   ├── stores/                    # Store global Zustand
-│   ├── types/                     # Tipos TypeScript
+│   ├── types/                     # Tipos e interfaces TypeScript
 │   ├── App.tsx                    # Componente raíz
-│   └── main.tsx                   # Punto de entrada
-├── LICENSE
+│   └── main.tsx                   # Entrada principal React 19
 ├── package.json
+├── tsconfig.json
 └── vite.config.ts
 ```
 
@@ -59,41 +67,39 @@ Centraliza la visualización de ingresos en tiempo real, volumen de pedidos, des
 - Node.js `>= 20.0.0`
 - npm `>= 10.0.0`
 
-### Pasos
+### Ejecución Local
 
-1. **Clonar el repositorio:**
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/alxnrocha/analytics-dashboard.git
+cd analytics-dashboard
 
-   ```bash
-   git clone https://github.com/alxnrocha/analytics-dashboard.git
-   cd analytics-dashboard
-   ```
+# 2. Instalar dependencias
+npm install
 
-2. **Instalar dependencias:**
+# 3. Iniciar servidor de desarrollo
+npm run dev
 
-   ```bash
-   npm install
-   ```
-
-3. **Ejecutar en modo desarrollo:**
-
-   ```bash
-   npm run dev
-   ```
-
-4. **Compilar para producción:**
-   ```bash
-   npm run build
-   ```
+# 4. Compilar para producción
+npm run build
+```
 
 ---
 
-## 🛡️ Calidad de Código & Testing
+## 🛠️ Tecnologías Utilizadas
 
-- **Linter & Typecheck:** Oxlint sin advertencias y TypeScript estricto.
-- **Accesibilidad (a11y):** Tooltips accesibles, foco visible y contraste cromático verificado.
+| Capa              | Tecnología        | Aspectos Clave                                       |
+| ----------------- | ----------------- | ---------------------------------------------------- |
+| **Framework**     | React 19          | Hooks modernos, arquitectura desacoplada por widgets |
+| **Lenguaje**      | TypeScript 5.8    | Tipado estricto para modelos financieros y métricas  |
+| **Estado Global** | Zustand 5.0       | Gestión reactiva de filtros y períodos de análisis   |
+| **Tablas**        | TanStack Table v8 | Tabla densa con ordenación y búsqueda                |
+| **Visualización** | Recharts 2.15     | Gráficos de área y donut con tooltips personalizados |
+| **Estilos**       | Tailwind CSS v4   | Diseño responsive corporativo y micro-animaciones    |
+| **Despliegue**    | GitHub Pages      | Despliegue estático continuo y optimizado            |
 
 ---
 
-## 📄 Licencia
-
-Este proyecto se encuentra bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+<div align="center">
+  <sub>Desarrollado con dedicación por <a href="https://github.com/alxnrocha">Alex Rocha</a> • Proyecto 09 del Portafolio Profesional Frontend.</sub>
+</div>
