@@ -23,13 +23,13 @@ export const ProjectBadge: React.FC = () => {
         bottom: '16px',
         left: '16px',
         zIndex: 99999,
-        maxWidth: '340px',
-        width: 'calc(100vw - 32px)',
+        width: '360px',
+        maxWidth: 'calc(100vw - 32px)',
         backgroundColor: '#0d1117',
         border: '1px solid #30363d',
         borderRadius: '14px',
         padding: '16px',
-        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5)',
+        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.5)',
         color: '#f0f6fc',
         fontFamily:
           '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif',
@@ -45,7 +45,7 @@ export const ProjectBadge: React.FC = () => {
       <div
         style={{
           display: 'flex',
-          alignItems: 'flex-start',
+          alignItems: 'center',
           justifyContent: 'space-between',
           gap: '8px',
           marginBottom: '8px',
@@ -63,7 +63,6 @@ export const ProjectBadge: React.FC = () => {
             whiteSpace: 'nowrap',
             fontFamily:
               '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif',
-            letterSpacing: 'normal',
           }}
         >
           SunnyShop Analytics
@@ -164,7 +163,9 @@ export const ProjectBadge: React.FC = () => {
             textDecoration: 'underline',
             fontSize: '12px',
             fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
-            wordBreak: 'break-all',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
             display: 'block',
           }}
         >
