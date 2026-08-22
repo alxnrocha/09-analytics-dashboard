@@ -69,7 +69,11 @@ export const ProjectBadge: React.FC = () => {
           SunnyShop Analytics
         </h2>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
-          <span
+          <a
+            href="https://github.com/alxnrocha"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Ver perfil de Alexandre Rocha no GitHub"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -81,7 +85,7 @@ export const ProjectBadge: React.FC = () => {
               fontSize: '10px',
               fontWeight: 800,
               letterSpacing: '0.5px',
-              textTransform: 'uppercase',
+              textDecoration: 'none',
               fontFamily:
                 '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif',
             }}
@@ -99,8 +103,23 @@ export const ProjectBadge: React.FC = () => {
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               <path d="m9 12 2 2 4-4" />
             </svg>
-            MEU PROJETO
-          </span>
+            <span>@alxnrocha</span>
+            <svg
+              width="10"
+              height="10"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{ opacity: 0.8 }}
+            >
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+              <polyline points="15 3 21 3 21 9" />
+              <line x1="10" y1="14" x2="21" y2="3" />
+            </svg>
+          </a>
           <button
             onClick={() => setIsVisible(false)}
             title="Fechar (retorna em 5s)"
@@ -169,9 +188,9 @@ export const ProjectBadge: React.FC = () => {
           href="https://github.com/alxnrocha"
           target="_blank"
           rel="noopener noreferrer"
-          style={{ color: '#c9d1d9', fontWeight: 600, textDecoration: 'none' }}
+          style={{ color: '#e6edf3', fontWeight: 600, textDecoration: 'none' }}
         >
-          Alexandre Rocha (@alxnrocha)
+          Alexandre Rocha
         </a>
       </p>
 
@@ -220,7 +239,18 @@ export const ProjectBadge: React.FC = () => {
             ⑂ main
           </span>
         </div>
-        <span>Atualizado recentemente</span>
+        <a
+          href="https://github.com/alxnrocha"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            color: '#8b949e',
+            textDecoration: 'none',
+            fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+          }}
+        >
+          github.com/alxnrocha
+        </a>
       </footer>
     </aside>
   );
